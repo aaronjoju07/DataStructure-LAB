@@ -22,6 +22,8 @@ public class RandomNumber {
         Scanner scanner = new Scanner(System.in);
         System.out.println(randomValue);
         for (int i = 0; i < attemptCount; i++) {
+            int RemainingCount = attemptCount - i;
+            System.out.println("Remaining " + RemainingCount + " attempts");
             System.out.println("Guss the number ");
             int gussNumber = scanner.nextInt();
             if (gussNumber == randomValue) {
