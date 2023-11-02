@@ -1,4 +1,5 @@
 public class Alarm {
+    
     protected String message;
     private boolean active;
     String phonenumber;
@@ -8,7 +9,6 @@ public class Alarm {
         this.active = false;
         this.phonenumber="9023982034";
     }
-
     public static void main(String[] args) {
         Alarm myAlam = new Alarm();
         InnerAlarmClass myClass = new InnerAlarmClass();
@@ -16,7 +16,7 @@ public class Alarm {
         myAlam.visualize();
         myAlam.register();
     }
-
+    
     public void visualize() {
 
         System.out.println("Displaying Alam ..!!");
@@ -32,6 +32,5 @@ public class Alarm {
         this.active = true;
         System.out.println("Registering");
     }
-
 }
 
