@@ -19,22 +19,23 @@ public class RandomNumber {
     }
 
     public void randCheck() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(randomValue);
-        for (int i = 0; i < attemptCount; i++) {
-            int RemainingCount = attemptCount - i;
-            System.out.println("Remaining " + RemainingCount + " attempts");
-            System.out.println("Guss the number ");
-            int gussNumber = scanner.nextInt();
-            if (gussNumber == randomValue) {
-                System.out.println("Woww....Gussed Right!..");
-                break;
-            } else {
-                System.out.println("Wrong Guss!!!");
-                if (gussNumber < randomValue) {
-                    System.out.println("Hint:gussed is less than RandomNumber");
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println(randomValue);
+            for (int i = 0; i < attemptCount; i++) {
+                int RemainingCount = attemptCount - i;
+                System.out.println("Remaining " + RemainingCount + " attempts");
+                System.out.println("Guss the number ");
+                int gussNumber = scanner.nextInt();
+                if (gussNumber == randomValue) {
+                    System.out.println("Woww....Gussed Right!..");
+                    break;
                 } else {
-                    System.out.println("Hint:gussed is greater than RandomNumber");
+                    System.out.println("Wrong Guss!!!");
+                    if (gussNumber < randomValue) {
+                        System.out.println("Hint:gussed is less than RandomNumber");
+                    } else {
+                        System.out.println("Hint:gussed is greater than RandomNumber");
+                    }
                 }
             }
         }
