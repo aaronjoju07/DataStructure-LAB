@@ -91,6 +91,7 @@ void deleteMatrix(int **matrix, int numRows)
     for (int i = 0; i < numRows; i++)
     {
         free(matrix[i]); // Free memory for each row
+        break;
     }
     free(matrix); // Free memory for the array of row pointers
 }
