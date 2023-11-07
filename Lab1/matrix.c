@@ -1,52 +1,96 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-// Function to add two matrices
-void addMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows, int cols) {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            result[i][j] = mat1[i][j] + mat2[i][j];
+#define ROWS 3
+#define COLS 2
+
+struct matrixStruct
+{
+    char hotel_name;
+    int bookings[ROWS][COLS];
+};
+
+struct matrixStruct hotel;
+
+void insertionDisplay();
+void deleteMatrix(int** matrix, int numRows);
+void displayMatrix();
+int main()
+{
+    int choice;
+    int continueMenu = 1; // A flag to continue the menu loop
+
+    while (continueMenu)
+    {
+        printf("----------------------Hotel_Management---------------------------\n");
+        printf("Enter your Choice (1: Insert, 2: Delete3: Display,4: Searching, 0: Exit): ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            printf("Enter the booking count received in the last 9 days:\n");
+            insertionDisplay();
+            break;
+        case 2:
+            // Delete the matrix
+            deleteMatrix((int**)hotel.bookings, ROWS);
+            printf("Matrix deleted\n");
+            break;
+        case 3:
+            displayMatrix();
+            break;
+        case 0:
+            continueMenu = 0; // Exit the loop
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
         }
-    }
-}
-
-// Function to multiply two matrices
-void multiplyMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows1, int cols1, int cols2) {
-    for (int i = 0; i < rows1; i++) {
-        for (int j = 0; j < cols2; j++) {
-            result[i][j] = 0;
-            for (int k = 0; k < cols1; k++) {
-                result[i][j] += mat1[i][k] * mat2[k][j];
-            }
-        }
-    }
-}
-
-int main() {
-    int mat1[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    int mat2[3][3] = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
-    int result[3][3];
-
-    int rows1 = 3, cols1 = 3, rows2 = 3, cols2 = 3;
-
-    // Add the matrices
-    addMatrices(mat1, mat2, result, rows1, cols1);
-    printf("Matrix Addition Result:\n");
-    for (int i = 0; i < rows1; i++) {
-        for (int j = 0; j < cols1; j++) {
-            printf("%d\t", result[i][j]);
-        }
-        printf("\n");
-    }
-
-    // Multiply the matrices
-    multiplyMatrices(mat1, mat2, result, rows1, cols1, cols2);
-    printf("Matrix Multiplication Result:\n");
-    for (int i = 0; i < rows1; i++) {
-        for (int j = 0; j < cols2; j++) {
-            printf("%d\t", result[i][j]);
-        }
-        printf("\n");
     }
 
     return 0;
+}
+void displayMatrix(){
+     printf("----------------------3x3 Matrix of bookings---------------------------\n");
+    for (int i = 0; i < ROWS; i++)
+    {
+        printf(" ");
+        for (int j = 0; j < COLS; j++)
+        {
+            printf("%d     ", hotel.bookings[i][j]);
+        }
+        printf("\n");
+    }
+}
+void insertionDisplay()
+{
+    // Insertion
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            scanf("%d", &hotel.bookings[i][j]);
+        }
+    }
+
+    // Display
+    printf("----------------------3x3 Matrix of bookings---------------------------\n");
+    for (int i = 0; i < ROWS; i++)
+    {
+        printf(" ");
+        for (int j = 0; j < COLS; j++)
+        {
+            printf("%d     ", hotel.bookings[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void deleteMatrix(int **matrix, int numRows)
+{
+    for (int i = 0; i < numRows; i++)
+    {
+        free(matrix[i]); // Free memory for each row
+    }
+    free(matrix); // Free memory for the array of row pointers
 }
