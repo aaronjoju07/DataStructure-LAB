@@ -1,116 +1,51 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#define MAX_PROPERTIES 100
-#define NUM_ATTRIBUTES 5
-
-struct RentalProperty {
-    int propertyId;
-    char address[100];
-    int rent;
-    int bedrooms;
-    int bathrooms;
-};
-
-struct RentalProperty properties[MAX_PROPERTIES]; 
-int propertyCount = 0;
-
-
-void insertProperty(int propertyId, char address[], int rent, int bedrooms, int bathrooms) {
-    if (propertyCount < MAX_PROPERTIES) {
-        properties[propertyCount].propertyId = propertyId;
-        strncpy(properties[propertyCount].address, address, sizeof(properties[propertyCount].address));
-        properties[propertyCount].rent = rent;
-        properties[propertyCount].bedrooms = bedrooms;
-        properties[propertyCount].bathrooms = bathrooms;
-        propertyCount++;
-        printf("Property added successfully.\n");
-    } else {
-        printf("Maximum property limit reached.\n");
+// Function to add two matrices
+void addMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = mat1[i][j] + mat2[i][j];
+        }
     }
 }
 
-
-void deleteProperty(int propertyId) {
-    int found = 0;
-    for (int i = 0; i < propertyCount; i++) {
-        if (properties[i].propertyId == propertyId) {
-            for (int j = i; j < propertyCount - 1; j++) {
-                properties[j] = properties[j + 1];
+// Function to multiply two matrices
+void multiplyMatrices(int mat1[][3], int mat2[][3], int result[][3], int rows1, int cols1, int cols2) {
+    for (int i = 0; i < rows1; i++) {
+        for (int j = 0; j < cols2; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < cols1; k++) {
+                result[i][j] += mat1[i][k] * mat2[k][j];
             }
-            propertyCount--;
-            found = 1;
-            printf("Property with ID %d deleted successfully.\n", propertyId);
-            break;
         }
-    }
-    if (!found) {
-        printf("Property with ID %d not found.\n", propertyId);
-    }
-}
-
-
-void searchProperty(int propertyId) {
-    int found = 0;
-    for (int i = 0; i < propertyCount; i++) {
-        if (properties[i].propertyId == propertyId) {
-            found = 1;
-            printf("Property found with details:\n");
-            printf("Property ID: %d\n", properties[i].propertyId);
-            printf("Address: %s\n", properties[i].address);
-            printf("Rent: %d\n", properties[i].rent);
-            printf("Bedrooms: %d\n", properties[i].bedrooms);
-            printf("Bathrooms: %d\n", properties[i].bathrooms);
-            break;
-        }
-    }
-    if (!found) {
-        printf("Property with ID %d not found.\n", propertyId);
     }
 }
 
 int main() {
-    int choice, propertyId, rent, bedrooms, bathrooms;
-    char address[100];
+    int mat1[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    int mat2[3][3] = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
+    int result[3][3];
 
-    while (1) {
-        printf("1. Insert Property\n");
-        printf("2. Delete Property\n");
-        printf("3. Search Property\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+    int rows1 = 3, cols1 = 3, rows2 = 3, cols2 = 3;
 
-        switch (choice) {
-            case 1:
-                printf("Enter Property ID: ");
-                scanf("%d", &propertyId);
-                printf("Enter Address: ");
-                scanf("%s", address);
-                printf("Enter Rent: ");
-                scanf("%d", &rent);
-                printf("Enter Bedrooms: ");
-                scanf("%d", &bedrooms);
-                printf("Enter Bathrooms: ");
-                scanf("%d", &bathrooms);
-                insertProperty(propertyId, address, rent, bedrooms, bathrooms);
-                break;
-            case 2:
-                printf("Enter Property ID to delete: ");
-                scanf("%d", &propertyId);
-                deleteProperty(propertyId);
-                break;
-            case 3:
-                printf("Enter Property ID to search: ");
-                scanf("%d", &propertyId);
-                searchProperty(propertyId);
-                break;
-            case 4:
-                exit(0);
-            default:
-                printf("Invalid choice. Please try again.\n");
+    // Add the matrices
+    addMatrices(mat1, mat2, result, rows1, cols1);
+    printf("Matrix Addition Result:\n");
+    for (int i = 0; i < rows1; i++) {
+        for (int j = 0; j < cols1; j++) {
+            printf("%d\t", result[i][j]);
         }
+        printf("\n");
+    }
+
+    // Multiply the matrices
+    multiplyMatrices(mat1, mat2, result, rows1, cols1, cols2);
+    printf("Matrix Multiplication Result:\n");
+    for (int i = 0; i < rows1; i++) {
+        for (int j = 0; j < cols2; j++) {
+            printf("%d\t", result[i][j]);
+        }
+        printf("\n");
     }
 
     return 0;
