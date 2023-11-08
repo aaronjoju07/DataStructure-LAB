@@ -6,7 +6,7 @@
 
 struct matrixStruct
 {
-    char hotel_name;
+    char hotel_name[10];
     int bookings[ROWS][COLS];
 };
 
@@ -36,10 +36,7 @@ int main()
         case 2:
             // Delete the matrix
             printf("Enter the Row and Column of the matrix \n");
-            printf("Row :");
-            scanf("%d ", &row);
-            printf("Column : ");
-            scanf("%d ", &col);
+            scanf("%d%d", &row,&col);
             deleteElement(row, col);
             break;
         case 3:
@@ -75,7 +72,9 @@ void displayMatrix()
 }
 void insertionDisplay()
 {
-    // Insertion
+    // Insert hotel nane
+    printf("");
+    // Insertion hotel booking details into 2d array
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
