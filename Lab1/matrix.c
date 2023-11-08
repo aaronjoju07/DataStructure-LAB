@@ -6,7 +6,7 @@
 
 struct matrixStruct
 {
-    char hotel_name[10];
+    char hotel_name[25];
     int bookings[ROWS][COLS];
 };
 
@@ -30,14 +30,17 @@ int main()
         switch (choice)
         {
         case 1:
+            // Insert the hotel name
+            printf("Enter Hotel Name :");
+            scanf("%s", &hotel.hotel_name);
             printf("Enter the booking count received in the last %d days:\n", count);
             insertionDisplay();
             break;
         case 2:
             // Delete the matrix
-            printf("Enter the Row and Column of the matrix \n");
-            scanf("%d%d", &row,&col);
-            deleteElement(row, col);
+            printf("Enter the Row and Column of the matrix : ");
+            scanf("%d %d", &row, &col);
+            deleteElement(row - 1, col - 1);
             break;
         case 3:
             displayMatrix();
@@ -72,9 +75,7 @@ void displayMatrix()
 }
 void insertionDisplay()
 {
-    // Insert hotel nane
-    printf("");
-    // Insertion hotel booking details into 2d array
+    // Insertion hotel booking details
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
@@ -84,7 +85,8 @@ void insertionDisplay()
     }
 
     // Display
-    printf("----------------------3x3 Matrix of bookings---------------------------\n");
+    printf("----------------------Bookings of %s---------------------------\n",hotel.hotel_name);
+
     for (int i = 0; i < ROWS; i++)
     {
         printf(" ");
@@ -100,7 +102,7 @@ int deleteElement(int row, int col)
 {
     if (row >= 0 && row < ROWS && col >= 0 && col < COLS)
     {
-        hotel.bookings[row - 1][col - 1] = -1; // Mark the element as deleted
+        hotel.bookings[row][col] = -1; // Mark the element as deleted
         return printf("Element deleted\n");
     }
     return printf("Element not found\n");
