@@ -35,8 +35,11 @@ int main()
             break;
         case 2:
             // Delete the matrix
-            printf("Enter the Row and Column of the matrix : ");
-            scanf("%d %d", &row, &col);
+            printf("Enter the Row and Column of the matrix \n");
+            printf("Row :");
+            scanf("%d ", &row);
+            printf("Column : ");
+            scanf("%d ", &col);
             deleteElement(row, col);
             break;
         case 3:
@@ -98,7 +101,7 @@ int deleteElement(int row, int col)
 {
     if (row >= 0 && row < ROWS && col >= 0 && col < COLS)
     {
-        hotel.bookings[row][col] = -1; // Mark the element as deleted
+        hotel.bookings[row - 1][col - 1] = -1; // Mark the element as deleted
         return printf("Element deleted\n");
     }
     return printf("Element not found\n");
