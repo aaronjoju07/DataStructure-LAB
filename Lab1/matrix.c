@@ -3,6 +3,7 @@
 
 #define ROWS 3
 #define COLS 3
+// #define COUNT 2
 
 struct matrixStruct
 {
@@ -16,6 +17,8 @@ void insertionDisplay();
 int deleteElement(int row, int col);
 void displayMatrix();
 int linearSearch(int value);
+void addMatrix();
+void mulMatrix();
 int main()
 {
     int choice, value, count = ROWS * COLS, row, col;
@@ -24,7 +27,7 @@ int main()
     while (continueMenu)
     {
         printf("----------------------Hotel_Management---------------------------\n");
-        printf("Enter your Choice (1: Insert, 2: Delete 3: Display,4: Searching, 0: Exit): ");
+        printf("Enter your Choice (1: Insert, 2: Delete 3: Display, 4: Searching,5 : Add Matrix, 6 : multiply matrix, 0: Exit): ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -50,6 +53,14 @@ int main()
             scanf("%d", &value);
             linearSearch(value);
             break;
+        case 5:
+            printf("----------------MATRIX ADDITION----------------------");
+            addMatrix();
+            break;
+        case 6:
+            printf("----------------MATRIX MUL----------------------");
+            mulMatrix();
+            break;
         case 0:
             continueMenu = 0; // Exit the loop
             break;
@@ -59,6 +70,50 @@ int main()
     }
 
     return 0;
+}
+void addMatrix()
+{
+    // adding two matrices
+    int i, j, sum[3][3];
+    for (i = 0; i < ROWS; ++i)
+        for (j = 0; j < COLS; ++j)
+        {
+            sum[i][j] = hotel.bookings[i][j] + hotel.bookings[i][j];
+        }
+
+    // DIsplay the matrix
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        printf(" ");
+        for (int j = 0; j < COLS; j++)
+        {
+            printf("%d     ", sum[i][j]);
+        }
+        printf("\n");
+    }
+}
+void mulMatrix()
+{
+    // adding two matrices
+    int i, j, mul[3][3];
+    for (i = 0; i < ROWS; ++i)
+        for (j = 0; j < COLS; ++j)
+        {
+            mul[i][j] = hotel.bookings[i][j] * hotel.bookings[i][j];
+        }
+
+    // DIsplay the matrix
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        printf(" ");
+        for (int j = 0; j < COLS; j++)
+        {
+            printf("%d     ", mul[i][j]);
+        }
+        printf("\n");
+    }
 }
 void displayMatrix()
 {
@@ -85,7 +140,7 @@ void insertionDisplay()
     }
 
     // Display
-    printf("----------------------Bookings of %s---------------------------\n",hotel.hotel_name);
+    printf("----------------------Bookings of %s---------------------------\n", hotel.hotel_name);
 
     for (int i = 0; i < ROWS; i++)
     {
