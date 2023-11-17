@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Define the structure for a hotel room
+// structure for a hotel room
 struct HotelRoom {
     int roomNumber;
     char guestName[50];
     struct HotelRoom *next;
 };
 
-// Function to display all hotel rooms
+// display all hotel rooms
 void displayRooms(struct HotelRoom *head) {
     struct HotelRoom *current = head;
 
@@ -19,7 +19,7 @@ void displayRooms(struct HotelRoom *head) {
     }
 }
 
-// Function to add a new room to the hotel
+// add a new room to the hotel
 struct HotelRoom *addRoom(struct HotelRoom *head, int roomNumber, const char *guestName) {
     struct HotelRoom *newRoom = (struct HotelRoom *)malloc(sizeof(struct HotelRoom));
     if (newRoom == NULL) {
@@ -35,12 +35,12 @@ struct HotelRoom *addRoom(struct HotelRoom *head, int roomNumber, const char *gu
     return newRoom;
 }
 
-// Function to remove a room from the hotel
+// remove a room from the hotel
 struct HotelRoom *removeRoom(struct HotelRoom *head, int roomNumber) {
     struct HotelRoom *current = head;
     struct HotelRoom *prev = NULL;
 
-    // Find the room to be removed
+    // Find room to be removed
     while (current != NULL && current->roomNumber != roomNumber) {
         prev = current;
         current = current->next;
@@ -62,7 +62,7 @@ struct HotelRoom *removeRoom(struct HotelRoom *head, int roomNumber) {
     return head;
 }
 
-// Function to free all allocated memory
+//free all allocated memory
 void freeMemory(struct HotelRoom *head) {
     struct HotelRoom *current = head;
     struct HotelRoom *next;
