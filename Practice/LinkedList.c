@@ -9,13 +9,66 @@ struct node *head;
 int beginsert();
 void lastinsert();
 void display();
+void randominsert();
 int main()
 {
-    beginsert();
-    lastinsert();
-    display();
-    return 0;
+    int choice = 0;
+    while (choice != 9)
+    {
+        printf("\nEnter Your Choice : ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            beginsert();
+            break;
+        case 2:
+            lastinsert();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            randominsert();
+            break;
+        case 9:
+            exit(0);
+        default:
+            printf("\nInvalid Input\n");
+            break;
+        }
+    }
 }
+void randominsert()
+{
+    int i, loc, val = 300;
+    struct node *ptr, *temp;
+    ptr = (struct node *)malloc(sizeof(struct node));
+    if (ptr == NULL)
+    {
+        printf("\nOVERFLOW");
+    }
+    else
+    {
+        ptr->data = val;
+        printf("\nEnter the location after which you want to insert ");
+        scanf("%d", &loc);
+        temp = head;
+        for (i = 0; i < loc - 1; i++)
+        {
+            temp = temp->next;
+            if (temp == NULL)
+            {
+                printf("\nLocation not found");
+                return; // Add return statement to exit the function if location not found
+            }
+        }
+        ptr->next = temp->next;
+        temp->next = ptr;
+        printf("\ndata inserted\n");
+    }
+}
+
 int beginsert()
 {
     struct node *ptr;
@@ -30,7 +83,7 @@ int beginsert()
         ptr->data = val;
         ptr->next = NULL;
         head = ptr;
-        return printf("Inserted value at the beginning");
+        return printf("\nInserted value at the beginning\n");
     }
 }
 
@@ -75,11 +128,10 @@ void display()
     }
     else
     {
-        while (ptr!=NULL)
+        while (ptr != NULL)
         {
             printf("\n%d", ptr->data);
             ptr = ptr->next;
         }
-        
     }
 }
