@@ -60,7 +60,7 @@ void randominsert()
             if (temp == NULL)
             {
                 printf("\nLocation not found");
-                return; // Add return statement to exit the function if location not found
+                return;
             }
         }
         ptr->next = temp->next;
