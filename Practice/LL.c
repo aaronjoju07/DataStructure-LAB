@@ -49,7 +49,7 @@ int main()
 void insertBegin()
 {
     int val = 100;
-    struct node *ptr;
+    struct node *ptr;  
     ptr = (struct node *)malloc(sizeof(struct node *));
     if (ptr == NULL)
     {
