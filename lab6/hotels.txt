@@ -1,0 +1,5 @@
+808 Hotel1 5
+74 Hotel2 4
+931 Hotel3 3
+545 Hotel4 4
+924 Hotel5 5
