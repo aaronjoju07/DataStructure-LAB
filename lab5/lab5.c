@@ -22,7 +22,7 @@ int linearSearch(struct Hotel hotels[], int n, int key, int *elementComparisons,
 
 // Function to perform sentinel search
 int sentinelSearch(struct Hotel hotels[], int n, int key, int *elementComparisons, int *indexComparisons) {
-    // Add a sentinel at the end of the array
+
     hotels[n].id = key;
 
     int i = 0;
@@ -31,11 +31,11 @@ int sentinelSearch(struct Hotel hotels[], int n, int key, int *elementComparison
         i++;
     }
 
-    (*indexComparisons)++; // Count the last comparison
+    (*indexComparisons)++; 
     if (i < n) {
-        return i; // Return the index if found
+        return i; 
     } else {
-        return -1; // Return -1 if not found
+        return -1; 
     }
 }
 
