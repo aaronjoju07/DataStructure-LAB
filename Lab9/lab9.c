@@ -4,28 +4,28 @@
 
 #define MAX_VERTICES 100
 
-// Structure to represent a hotel
+
 struct Hotel {
     char name[50];
     int floor;
     int capacity;
 };
 
-// Graph representation using adjacency matrix
+
 int graph[MAX_VERTICES][MAX_VERTICES];
 int vertices;
 
-// Queue for BFS
+
 int queue[MAX_VERTICES];
 int front = -1, rear = -1;
 
-// Visited array for DFS
+
 bool visited[MAX_VERTICES];
 
-// Array of hotels
+
 struct Hotel hotels[MAX_VERTICES];
 
-// Function declarations
+
 void initGraph(int v);
 void addEdge(int start, int end);
 void BFS(int start);
@@ -35,7 +35,7 @@ int dequeue();
 bool isEmpty();
 void inputHotelData();
 
-// Initialize graph
+
 void initGraph(int v) {
     vertices = v;
     for (int i = 0; i < MAX_VERTICES; i++) {
@@ -46,13 +46,13 @@ void initGraph(int v) {
     }
 }
 
-// Add an edge to the graph
+
 void addEdge(int start, int end) {
     graph[start][end] = 1;
-    graph[end][start] = 1; // Assuming an undirected graph
+    graph[end][start] = 1; 
 }
 
-// Breadth-First Traversal (BFS)
+
 void BFS(int start) {
     enqueue(start);
     visited[start] = true;
@@ -70,7 +70,7 @@ void BFS(int start) {
     }
 }
 
-// Depth-First Traversal (DFS)
+
 void DFS(int start) {
     printf("%s ", hotels[start].name);
     visited[start] = true;
@@ -82,7 +82,7 @@ void DFS(int start) {
     }
 }
 
-// Queue operations for BFS
+
 void enqueue(int value) {
     if (rear == MAX_VERTICES - 1) {
         printf("Queue is full\n");
@@ -143,7 +143,7 @@ int main() {
     printf("\nBreadth-First Traversal (BFS): ");
     BFS(0);
 
-    // Reset visited array for DFS
+
     for (int i = 0; i < vertices; i++) {
         visited[i] = false;
     }

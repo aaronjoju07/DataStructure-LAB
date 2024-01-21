@@ -2,21 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure to represent hotel information
+
 struct Hotel {
     int id;
     char name[50];
     int rating;
 };
 
-// Function to swap two hotels
+
 void swap(struct Hotel *a, struct Hotel *b) {
     struct Hotel temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Function to partition the array for Quick Sort
+
 int partition(struct Hotel hotels[], int low, int high, int *comparisons, int *dataTransfers) {
     int pivot = hotels[high].id;
     int i = low - 1;
@@ -34,7 +34,7 @@ int partition(struct Hotel hotels[], int low, int high, int *comparisons, int *d
     return i + 1;
 }
 
-// Function to perform Quick Sort
+
 void quickSort(struct Hotel hotels[], int low, int high, int *comparisons, int *dataTransfers) {
     if (low < high) {
         int pi = partition(hotels, low, high, comparisons, dataTransfers);
@@ -44,7 +44,7 @@ void quickSort(struct Hotel hotels[], int low, int high, int *comparisons, int *
     }
 }
 
-// Function to perform Bubble Sort and count comparisons and data transfers
+
 void bubbleSort(struct Hotel hotels[], int n, int *comparisons, int *dataTransfers) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
@@ -58,7 +58,7 @@ void bubbleSort(struct Hotel hotels[], int n, int *comparisons, int *dataTransfe
     }
 }
 
-// Function to write hotel data to a file
+
 void writeToFile(struct Hotel hotels[], int n, const char *filename) {
     FILE *file = fopen(filename, "w");
     if (file != NULL) {
@@ -71,7 +71,7 @@ void writeToFile(struct Hotel hotels[], int n, const char *filename) {
     }
 }
 
-// Function to read hotel data from a file
+
 void readFromFile(struct Hotel hotels[], int n, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file != NULL) {
@@ -85,10 +85,10 @@ void readFromFile(struct Hotel hotels[], int n, const char *filename) {
 }
 
 int main() {
-    // Number of hotels
+
     const int n = 5;
 
-    // Generate random hotel data
+
     struct Hotel hotels[n];
     for (int i = 0; i < n; i++) {
         hotels[i].id = rand() % 1000 + 1;
@@ -96,42 +96,42 @@ int main() {
         hotels[i].rating = rand() % 5 + 1;
     }
 
-    // Save data to a file
+
     writeToFile(hotels, n, "hotels.txt");
 
-    // Read data from the file
+
     readFromFile(hotels, n, "hotels.txt");
 
-    // Display original hotel data
+
     printf("Original Hotels:\n");
     for (int i = 0; i < n; i++) {
         printf("ID: %d, Name: %s, Rating: %d\n", hotels[i].id, hotels[i].name, hotels[i].rating);
     }
 
-    // Quick Sort
+
     int quickComparisons = 0, quickDataTransfers = 0;
     quickSort(hotels, 0, n - 1, &quickComparisons, &quickDataTransfers);
 
-    // Display sorted hotel data after Quick Sort
+
     printf("\nHotels after Quick Sort:\n");
     for (int i = 0; i < n; i++) {
         printf("ID: %d, Name: %s, Rating: %d\n", hotels[i].id, hotels[i].name, hotels[i].rating);
     }
 
-    // Read data from the file again
+
     readFromFile(hotels, n, "hotels.txt");
 
-    // Bubble Sort
+
     int bubbleComparisons = 0, bubbleDataTransfers = 0;
     bubbleSort(hotels, n, &bubbleComparisons, &bubbleDataTransfers);
 
-    // Display sorted hotel data after Bubble Sort
+
     printf("\nHotels after Bubble Sort:\n");
     for (int i = 0; i < n; i++) {
         printf("ID: %d, Name: %s, Rating: %d\n", hotels[i].id, hotels[i].name, hotels[i].rating);
     }
 
-    // Display comparison and data transfer results
+
     printf("\nQuick Sort Comparisons: %d, Data Transfers: %d\n", quickComparisons, quickDataTransfers);
     printf("Bubble Sort Comparisons: %d, Data Transfers: %d\n", bubbleComparisons, bubbleDataTransfers);
 

@@ -1,133 +1,150 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
-#define MAX 100
-
+#define MAX_HOTELS 3
 struct Edge {
-    int src, dest, weight;
+    int src, dest, distance;
 };
 
 struct Graph {
     int V, E;
-    struct Edge* edges;
-};
-
-struct Subset {
-    int parent, rank;
+    struct Edge* edge;
 };
 
 struct Graph* createGraph(int V, int E) {
     struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
     graph->V = V;
     graph->E = E;
-    graph->edges = (struct Edge*)malloc(E * sizeof(struct Edge));
+
+    graph->edge = (struct Edge*)malloc(graph->E * sizeof(struct Edge));
+
     return graph;
 }
 
-int find(struct Subset subsets[], int i) {
-    if (subsets[i].parent != i)
-        subsets[i].parent = find(subsets, subsets[i].parent);
-    return subsets[i].parent;
-}
+int minDistance(int distance[], int mstSet[]) {
+    int min = INT_MAX, min_index;
 
-void Union(struct Subset subsets[], int x, int y) {
-    int rootX = find(subsets, x);
-    int rootY = find(subsets, y);
-
-    if (subsets[rootX].rank < subsets[rootY].rank)
-        subsets[rootX].parent = rootY;
-    else if (subsets[rootX].rank > subsets[rootY].rank)
-        subsets[rootY].parent = rootX;
-    else {
-        subsets[rootX].parent = rootY;
-        subsets[rootY].rank++;
-    }
-}
-
-int compareEdges(const void* a, const void* b) {
-    return ((struct Edge*)a)->weight - ((struct Edge*)b)->weight;
-}
-
-void primMST(struct Graph* graph) {
-    int parent[MAX];
-    int key[MAX];
-    int inMST[MAX];
-
-    for (int i = 0; i < graph->V; i++) {
-        key[i] = MAX;
-        inMST[i] = 0;
+    for (int v = 0; v < MAX_HOTELS; v++) {
+        if (mstSet[v] == 0 && distance[v] < min) {
+            min = distance[v];
+            min_index = v;
+        }
     }
 
-    key[0] = 0;
+    return min_index;
+}
+
+void printMST(int parent[], int graph[MAX_HOTELS][MAX_HOTELS]) {
+    printf("Minimum Spanning Tree:\n");
+    printf("Hotel \tDistance\n");
+    for (int i = 1; i < MAX_HOTELS; i++)
+        printf("%d - %d \t%d \n", parent[i], i, graph[i][parent[i]]);
+}
+
+void primMST(int graph[MAX_HOTELS][MAX_HOTELS]) {
+    int parent[MAX_HOTELS];
+    int distance[MAX_HOTELS];
+    int mstSet[MAX_HOTELS];
+
+    for (int i = 0; i < MAX_HOTELS; i++) {
+        distance[i] = INT_MAX;
+        mstSet[i] = 0;
+    }
+
+    distance[0] = 0;
     parent[0] = -1;
 
-    for (int count = 0; count < graph->V - 1; count++) {
-        int u = -1;
-        for (int v = 0; v < graph->V; v++) {
-            if (!inMST[v] && (u == -1 || key[v] < key[u]))
-                u = v;
-        }
+    for (int count = 0; count < MAX_HOTELS - 1; count++) {
+        int u = minDistance(distance, mstSet);
 
-        inMST[u] = 1;
+        mstSet[u] = 1;
 
-        for (int v = 0; v < graph->V; v++) {
-            if (graph->edges[u * graph->V + v].weight != 0 &&
-                !inMST[v] && graph->edges[u * graph->V + v].weight < key[v]) {
-                key[v] = graph->edges[u * graph->V + v].weight;
+        for (int v = 0; v < MAX_HOTELS; v++) {
+            if (graph[u][v] && mstSet[v] == 0 && graph[u][v] < distance[v]) {
                 parent[v] = u;
+                distance[v] = graph[u][v];
             }
         }
     }
 
-    printf("Prim's MST edges:\n");
-    for (int i = 1; i < graph->V; i++) {
-        printf("(%d, %d) - %d\n", parent[i], i, key[i]);
-    }
+    printMST(parent, graph);
+}
+
+int myComp(const void* a, const void* b) {
+    return ((struct Edge*)a)->distance - ((struct Edge*)b)->distance;
+}
+
+int find(int parent[], int i) {
+    if (parent[i] == -1)
+        return i;
+    return find(parent, parent[i]);
+}
+
+void Union(int parent[], int x, int y) {
+    int xset = find(parent, x);
+    int yset = find(parent, y);
+    parent[xset] = yset;
 }
 
 void kruskalMST(struct Graph* graph) {
-    struct Edge result[MAX];
-    qsort(graph->edges, graph->E, sizeof(graph->edges[0]), compareEdges);
+    int* parent = (int*)malloc(MAX_HOTELS * sizeof(int));
+    for (int i = 0; i < MAX_HOTELS; i++)
+        parent[i] = -1;
 
-    struct Subset subsets[MAX];
-    for (int v = 0; v < graph->V; v++) {
-        subsets[v].parent = v;
-        subsets[v].rank = 0;
-    }
+    qsort(graph->edge, graph->E, sizeof(graph->edge[0]), myComp);
 
-    int e = 0, i = 0;
-    while (e < graph->V - 1 && i < graph->E) {
-        struct Edge nextEdge = graph->edges[i++];
-
-        int x = find(subsets, nextEdge.src);
-        int y = find(subsets, nextEdge.dest);
+    printf("Minimum Spanning Tree:\n");
+    for (int i = 0; i < graph->E; i++) {
+        int x = find(parent, graph->edge[i].src);
+        int y = find(parent, graph->edge[i].dest);
 
         if (x != y) {
-            result[e++] = nextEdge;
-            Union(subsets, x, y);
+            printf("%d - %d \t%d \n", graph->edge[i].src, graph->edge[i].dest, graph->edge[i].distance);
+            Union(parent, x, y);
         }
-    }
-
-    printf("\nKruskal's MST edges:\n");
-    for (int i = 0; i < e; i++) {
-        printf("(%d, %d) - %d\n", result[i].src, result[i].dest, result[i].weight);
     }
 }
 
 int main() {
-    int V, E;
-    printf("Enter the number of vertices and edges: ");
-    scanf("%d %d", &V, &E);
+    int hotelDistances[MAX_HOTELS][MAX_HOTELS];
+    int choice;
 
-    struct Graph* graph = createGraph(V, E);
-
-    printf("Enter the edges (source, destination, weight):\n");
-    for (int i = 0; i < E; i++) {
-        scanf("%d %d %d", &graph->edges[i].src, &graph->edges[i].dest, &graph->edges[i].weight);
+    printf("Enter the distances between hotels (0 for no connection):\n");
+    for (int i = 0; i < MAX_HOTELS; i++) {
+        // printf("Hotel");
+        for (int j = 0; j < MAX_HOTELS; j++) {
+            scanf("%d", &hotelDistances[i][j]);
+        }
     }
 
-    primMST(graph);
-    kruskalMST(graph);
+    struct Graph* userGraph = createGraph(MAX_HOTELS, MAX_HOTELS * (MAX_HOTELS - 1) / 2);
+
+    int k = 0;
+    for (int i = 0; i < MAX_HOTELS; i++) {
+        for (int j = i + 1; j < MAX_HOTELS; j++) {
+            userGraph->edge[k].src = i;
+            userGraph->edge[k].dest = j;
+            userGraph->edge[k].distance = hotelDistances[i][j];
+            k++;
+        }
+    }
+
+    printf("Choose the MST algorithm:\n");
+    printf("1. Prim's Algorithm\n");
+    printf("2. Kruskal's Algorithm\n");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            primMST(hotelDistances);
+            break;
+        case 2:
+            kruskalMST(userGraph);
+            break;
+        default:
+            printf("Invalid choice\n");
+    }
 
     return 0;
 }

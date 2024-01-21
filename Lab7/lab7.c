@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure for a node in the BST
+
 struct Node
 {
     int roomNumber;
@@ -11,7 +11,7 @@ struct Node
     struct Node *right;
 };
 
-// Function to create a new node
+
 struct Node *createNode(int roomNumber, const char guestName[])
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
@@ -21,7 +21,7 @@ struct Node *createNode(int roomNumber, const char guestName[])
     return newNode;
 }
 
-// Function to insert a guest into the BST
+
 struct Node *insert(struct Node *root, int roomNumber, const char guestName[])
 {
     if (root == NULL)
@@ -40,7 +40,7 @@ struct Node *insert(struct Node *root, int roomNumber, const char guestName[])
 
     return root;
 }
-// Function for inorder traversal of the BST
+
 void inorderTraversal(struct Node *root)
 {
     if (root != NULL)
@@ -51,7 +51,7 @@ void inorderTraversal(struct Node *root)
     }
 }
 
-// Function for preorder traversal of the BST
+
 void preorderTraversal(struct Node *root)
 {
     if (root != NULL)
@@ -62,7 +62,7 @@ void preorderTraversal(struct Node *root)
     }
 }
 
-// Function for postorder traversal of the BST
+
 void postorderTraversal(struct Node *root)
 {
     if (root != NULL)
@@ -85,13 +85,13 @@ int main()
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch (choice)
+        switch (choice) 
         {
         case 1:
             printf("Enter Room Number: ");
             scanf("%d", &roomNumber);
             printf("Enter Guest Name: ");
-            scanf(" %[^\n]s", guestName);
+            scanf(" %s", guestName);
             root = insert(root, roomNumber, guestName);
             break;
         case 2:

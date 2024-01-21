@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure for a node in the BST
+
 struct Node
 {
     int roomNumber;
@@ -11,7 +11,7 @@ struct Node
     struct Node *right;
 };
 
-// Function to create a new node
+
 struct Node *createNode(int roomNumber, const char guestName[])
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
@@ -21,7 +21,7 @@ struct Node *createNode(int roomNumber, const char guestName[])
     return newNode;
 }
 
-// Function to insert a guest into the BST
+
 struct Node *insert(struct Node *root, int roomNumber, const char guestName[])
 {
     if (root == NULL)
@@ -41,7 +41,7 @@ struct Node *insert(struct Node *root, int roomNumber, const char guestName[])
     return root;
 }
 
-// Function to remove a guest from the BST
+
 struct Node *removeGuest(struct Node *root, int roomNumber)
 {
     if (root == NULL)
@@ -86,7 +86,7 @@ struct Node *removeGuest(struct Node *root, int roomNumber)
     return root;
 }
 
-// Function to search for a guest in the BST
+
 struct Node *search(struct Node *root, int roomNumber)
 {
     if (root == NULL || root->roomNumber == roomNumber)
@@ -102,7 +102,7 @@ struct Node *search(struct Node *root, int roomNumber)
     return search(root->right, roomNumber);
 }
 
-// Function to calculate the height of the BST
+
 int height(struct Node *root)
 {
     if (root == NULL)
@@ -116,7 +116,7 @@ int height(struct Node *root)
     return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
 }
 
-// Function for inorder traversal of the BST
+
 void inorderTraversal(struct Node *root)
 {
     if (root != NULL)
@@ -138,7 +138,7 @@ void preorderTraversal(struct Node *root)
     }
 }
 
-// Function for postorder traversal of the BST
+
 void postorderTraversal(struct Node *root)
 {
     if (root != NULL)
