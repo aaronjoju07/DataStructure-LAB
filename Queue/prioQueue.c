@@ -13,19 +13,19 @@ typedef struct {
     int size;
 } PriorityQueue;
 
-// Function to initialize an empty priority queue
+
 void initializePriorityQueue(PriorityQueue *pq) {
     pq->size = 0;
 }
 
-// Function to swap two elements in the priority queue
+
 void swap(Element *a, Element *b) {
     Element temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Function to maintain the heap property while inserting an element
+
 void heapifyUp(PriorityQueue *pq, int index) {
     while (index > 0) {
         int parentIndex = (index - 1) / 2;
@@ -38,7 +38,7 @@ void heapifyUp(PriorityQueue *pq, int index) {
     }
 }
 
-// Function to insert an element into the priority queue
+
 void insert(PriorityQueue *pq, int data, int priority) {
     if (pq->size < MAX_SIZE) {
         Element newElement = {data, priority};
@@ -50,7 +50,7 @@ void insert(PriorityQueue *pq, int data, int priority) {
     }
 }
 
-// Function to maintain the heap property while extracting the minimum element
+
 void heapifyDown(PriorityQueue *pq, int index) {
     int leftChild = 2 * index + 1;
     int rightChild = 2 * index + 2;
@@ -70,7 +70,7 @@ void heapifyDown(PriorityQueue *pq, int index) {
     }
 }
 
-// Function to extract the element with the highest priority (minimum priority value)
+
 Element extractMin(PriorityQueue *pq) {
     if (pq->size > 0) {
         Element minElement = pq->heap[0];
@@ -88,12 +88,12 @@ int main() {
     PriorityQueue pq;
     initializePriorityQueue(&pq);
 
-    // Inserting elements into the priority queue
+
     insert(&pq, 5, 2);
     insert(&pq, 10, 1);
     insert(&pq, 3, 5);
 
-    // Extracting and printing elements with the highest priority
+
     Element minElement = extractMin(&pq);
     printf("Extracted: %d (Priority: %d)\n", minElement.data, minElement.priority);
 
